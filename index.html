@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="InterviewGamer — original game-based cognitive assessment practice." />
+  <title>InterviewGamer — Assessment Practice</title>
+  <style>
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --text:#171a24; --muted:#687083; --line:#e4e7ef;
+  --accent:#5b5cf0; --accent2:#8b5cf6; --good:#149b70; --warn:#d97706; --bad:#d84b4b;
+  --shadow:0 18px 50px rgba(30,34,54,.08); --radius:24px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button{font:inherit} button:focus-visible,a:focus-visible{outline:3px solid rgba(91,92,240,.28);outline-offset:3px}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:rgba(246,247,251,.92);position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;text-decoration:none;letter-spacing:-.02em}.brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-size:13px}.top-actions{display:flex;gap:10px;align-items:center}.pill{font-size:12px;font-weight:700;padding:7px 10px;border-radius:999px;background:#ececff;color:#4f46e5}.shell{max-width:1180px;margin:0 auto;padding:40px 22px 72px}.view{display:none}.view.active{display:block}.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:42px;align-items:center;padding:42px 0 56px}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;font-weight:800;color:var(--accent);margin:0 0 10px}.hero h1,.game-header h1,.results-top h1{font-size:clamp(34px,5vw,62px);line-height:1.02;letter-spacing:-.055em;margin:0}.hero-copy{font-size:19px;line-height:1.6;color:var(--muted);max-width:700px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.primary,.secondary,.ghost{border:0;border-radius:14px;padding:13px 18px;font-weight:750;cursor:pointer;transition:.18s transform,.18s background,.18s border-color}.primary{background:var(--text);color:#fff}.primary:hover{transform:translateY(-1px);background:#282c3a}.secondary{background:#ececff;color:#4f46e5}.secondary:hover{background:#e1e1ff}.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}.ghost:hover{border-color:#cbd0dc;background:#fff}.small{padding:8px 11px;font-size:12px}.hero-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}.metric-big{display:flex;align-items:baseline;gap:8px;padding-bottom:18px;border-bottom:1px solid var(--line)}.metric-big span{font-size:44px;font-weight:850;letter-spacing:-.05em}.metric-big small{color:var(--muted)}.profile-bars{display:grid;gap:12px;margin-top:18px}.profile-row{display:grid;grid-template-columns:110px 1fr 34px;gap:10px;align-items:center;font-size:12px}.mini-bar{height:7px;background:#edf0f5;border-radius:999px;overflow:hidden}.mini-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:28px 0 18px}.section-head h2{font-size:28px;letter-spacing:-.035em;margin:0}.section-head>p{color:var(--muted);margin:0;max-width:380px;text-align:right}.section-head.compact{margin-top:40px}.game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.game-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;cursor:pointer;transition:.18s transform,.18s box-shadow,.18s border-color;text-align:left}.game-card:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(26,30,51,.08);border-color:#ced2df}.game-icon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#f0f1ff;font-size:24px}.game-card h3{margin:0 0 5px;font-size:17px}.game-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.game-meta{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}.tag{font-size:10px;font-weight:750;background:#f1f3f7;color:#5f6676;padding:5px 7px;border-radius:7px}.best{font-size:11px;font-weight:800;color:var(--good);white-space:nowrap}.notice{margin-top:24px;background:#fff8e9;border:1px solid #f3dfb8;color:#745627;border-radius:16px;padding:14px 16px;font-size:13px;line-height:1.55}.game-header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}.game-header-center{text-align:center}.game-header h1{font-size:32px}.hud{justify-self:end;display:flex;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}.hud>div{padding:10px 15px;min-width:74px;text-align:center}.hud>div+div{border-left:1px solid var(--line)}.hud-label{display:block;text-transform:uppercase;letter-spacing:.09em;font-size:9px;color:var(--muted);font-weight:800}.hud strong{font-size:18px}.progress-track{height:6px;background:#e8eaf1;border-radius:999px;margin:22px 0 26px;overflow:hidden}.progress-track>div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .25s ease}.stage{min-height:540px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:center}.stage h2{font-size:28px;letter-spacing:-.035em;margin:0 0 8px;text-align:center}.stage-copy{color:var(--muted);max-width:650px;text-align:center;line-height:1.55;margin:0 auto 24px}.instruction-card{max-width:700px;text-align:center}.instruction-icon{width:76px;height:76px;border-radius:22px;background:#f0f1ff;display:grid;place-items:center;font-size:36px;margin:0 auto 20px}.instruction-list{display:grid;gap:10px;text-align:left;background:#f7f8fb;border:1px solid var(--line);padding:16px;border-radius:16px;margin:20px 0}.instruction-list div{display:flex;gap:10px;color:#555d6f;font-size:14px}.instruction-list b{color:var(--text)}.grid-board{display:grid;gap:8px;width:min(430px,100%);margin:18px auto}.grid-cell{aspect-ratio:1;border:1px solid #d8dce7;background:#f4f5f8;border-radius:12px;cursor:pointer;transition:.12s}.grid-cell:hover{border-color:#aeb5c6}.grid-cell.active{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(91,92,240,.12)}.grid-cell.selected{background:#dedfff;border-color:var(--accent)}.grid-cell.correct{background:#d7f3e8;border-color:var(--good)}.grid-cell.wrong{background:#fde0df;border-color:var(--bad)}.route-board{display:grid;gap:4px;width:min(440px,100%);margin:16px auto}.route-cell{aspect-ratio:1;display:grid;place-items:center;border-radius:8px;background:#f1f3f7;font-size:20px;font-weight:800}.route-cell.wall{background:#313644}.route-cell.goal{background:#d7f3e8;color:#087d57}.route-cell.player{background:#e2e2ff;color:#4f46e5;box-shadow:inset 0 0 0 2px #6d6ef4}.controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}.controls button{min-width:52px}.target-number{font-size:64px;font-weight:900;letter-spacing:-.06em;text-align:center;margin:8px}.number-pool{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px auto}.number-chip{min-width:64px;height:58px;border:1px solid var(--line);background:#f8f9fb;border-radius:14px;font-size:21px;font-weight:800;cursor:pointer}.number-chip.used{opacity:.35;pointer-events:none}.expression{min-height:56px;background:#f5f6f9;border:1px dashed #cfd4df;border-radius:14px;padding:14px 18px;min-width:min(560px,100%);font-size:22px;font-weight:800;text-align:center}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:min(720px,100%);margin:20px auto}.choice{border:1px solid var(--line);background:#f8f9fb;border-radius:16px;padding:18px;min-height:86px;cursor:pointer;font-weight:700;color:var(--text)}.choice:hover{border-color:#bfc5d2;background:#fff}.choice.correct{background:#def5eb;border-color:var(--good)}.choice.wrong{background:#fee7e6;border-color:var(--bad)}.pattern{font-size:25px;letter-spacing:.22em;line-height:1.6}.logic-table{border-collapse:separate;border-spacing:6px;margin:18px auto}.logic-table td{width:52px;height:52px;text-align:center;background:#f1f3f7;border-radius:10px;font-size:23px;font-weight:800}.logic-table td.blank{background:#fff;border:2px dashed #bec4d1}.signal-arena{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;width:min(600px,100%);margin:18px auto}.signal{aspect-ratio:1;display:grid;place-items:center;border:1px solid var(--line);background:#f7f8fb;border-radius:12px;font-size:22px;cursor:pointer}.signal:hover{background:#fff}.signal.target{outline:3px solid rgba(91,92,240,.15)}.sort-prompt{width:min(650px,100%);margin:20px auto;text-align:center}.sort-object{display:inline-flex;align-items:center;justify-content:center;width:140px;height:140px;border-radius:28px;background:#f3f4f8;font-size:62px;margin:12px}.sort-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.sort-buttons button{padding:18px}.priority-list{display:grid;gap:12px;width:min(760px,100%);margin:18px auto}.priority-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:15px;background:#f7f8fb;border:1px solid var(--line);border-radius:16px}.priority-rank{width:34px;height:34px;border-radius:10px;background:#e9eaff;display:grid;place-items:center;font-weight:850;color:#4f46e5}.priority-item button{padding:8px 10px}.priority-info b{display:block}.priority-info span{font-size:12px;color:var(--muted)}.recovery-map{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(720px,100%);margin:18px auto}.system-node{border:1px solid var(--line);background:#f7f8fb;border-radius:18px;padding:18px;text-align:center;cursor:pointer}.system-node strong{display:block;margin-top:8px}.system-node.failed{border-color:#f3b4b4;background:#fff1f0}.system-node.restored{border-color:#a8dec9;background:#effaf6}.code-card{width:min(720px,100%);background:#20242e;color:#e8eaf0;border-radius:18px;padding:20px 22px;font-family:"SFMono-Regular",Consolas,monospace;font-size:15px;line-height:1.7;white-space:pre-wrap;margin:18px auto}.answer-row{display:flex;gap:10px;width:min(520px,100%);margin:12px auto}.answer-row input{flex:1;min-width:0;padding:13px 14px;border:1px solid #ccd1dc;border-radius:12px;font:inherit;font-size:16px}.feedback{min-height:28px;text-align:center;margin:12px 0;font-weight:750}.feedback.good{color:var(--good)}.feedback.bad{color:var(--bad)}.micro{font-size:12px;color:var(--muted)}.end-card{max-width:620px;text-align:center}.score-ring{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;margin:0 auto 20px;background:conic-gradient(var(--accent) var(--score-angle,0deg),#eceef3 0);position:relative}.score-ring:after{content:"";position:absolute;inset:13px;background:#fff;border-radius:50%}.score-ring strong{position:relative;z-index:1;font-size:42px;letter-spacing:-.05em}.score-ring small{position:absolute;z-index:1;margin-top:55px;color:var(--muted)}.end-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.end-stats div{background:#f5f6f9;border-radius:14px;padding:12px}.end-stats strong{display:block;font-size:20px}.end-stats span{font-size:11px;color:var(--muted)}.results-top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px}.results-top h1{font-size:46px}.results-top p:not(.eyebrow){color:var(--muted)}.overall-card{background:linear-gradient(135deg,#262b38,#171a24);color:#fff;border-radius:24px;padding:28px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}.overall-score{font-size:64px;font-weight:900;letter-spacing:-.06em}.overall-score span{font-size:16px;color:#b9becd;margin-left:6px}.overall-card p{color:#c6cbd8;margin:5px 0 0}.skill-results{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}.skill-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px}.skill-card-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px}.skill-card-head b{font-size:14px}.skill-card-head span{font-weight:850}.skill-bar{height:8px;background:#eef0f4;border-radius:999px;overflow:hidden}.skill-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}.history-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.history-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;display:flex;justify-content:space-between;align-items:center}.history-item strong{font-size:14px}.history-item span{font-weight:850;color:var(--accent)}.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:#171a24;color:#fff;padding:11px 15px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:28px}.game-grid,.skill-results,.history-grid{grid-template-columns:1fr}.game-header{grid-template-columns:1fr auto}.game-header-center{grid-column:1/-1;grid-row:1;text-align:left}.game-header .ghost{grid-row:2}.hud{grid-row:2}.stage{min-height:500px;padding:20px}.section-head{align-items:start;flex-direction:column}.section-head>p{text-align:left}.choice-grid{grid-template-columns:1fr}.results-top{align-items:flex-start;flex-direction:column}.overall-card{grid-template-columns:1fr}.signal-arena{grid-template-columns:repeat(5,1fr)}.recovery-map{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.topbar{height:auto;min-height:64px;padding:12px 16px}.pill{display:none}.shell{padding:26px 14px 56px}.hero h1{font-size:40px}.game-card{grid-template-columns:auto 1fr}.game-card .best{grid-column:2}.hero-panel{padding:18px}.profile-row{grid-template-columns:90px 1fr 28px}.hud>div{min-width:64px;padding:9px 10px}.target-number{font-size:52px}.end-stats{grid-template-columns:1fr}.sort-object{width:110px;height:110px}.signal-arena{grid-template-columns:repeat(4,1fr)}.priority-item{grid-template-columns:auto 1fr}.priority-item .controls{grid-column:1/-1}.results-top h1{font-size:38px}}
+
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="InterviewGamer home">
+      <span class="brand-mark">IG</span>
+      <span>InterviewGamer</span>
+    </a>
+    <div class="top-actions">
+      <span class="pill">Practice mode</span>
+      <button id="resetProgress" class="ghost small" type="button">Reset progress</button>
+    </div>
+  </header>
+
+  <main id="app" class="shell">
+    <section id="homeView" class="view active" aria-labelledby="homeTitle">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Game-based assessment practice</p>
+          <h1 id="homeTitle">Train the skills interviews actually test.</h1>
+          <p class="hero-copy">Ten original mini-games for memory, reasoning, numerical agility, attention, planning, adaptability and decision-making.</p>
+          <div class="hero-actions">
+            <button id="startRecommended" class="primary" type="button">Start practice run</button>
+            <button id="showResults" class="secondary" type="button">View my results</button>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="Practice profile preview">
+          <div class="metric-big"><span id="gamesPlayedMetric">0</span><small>/ 10 games tried</small></div>
+          <div class="profile-bars" id="profileBars"></div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Choose a challenge</p>
+          <h2>10 original assessment games</h2>
+        </div>
+        <p>Each game now uses a tougher multi-round practice progression.</p>
+      </div>
+      <div id="gameGrid" class="game-grid"></div>
+      <div class="notice">Practice scores are coaching feedback, not hiring recommendations. A real hiring assessment should be validated for the role and used alongside structured interviews and job-relevant evidence.</div>
+    </section>
+
+    <section id="gameView" class="view" aria-labelledby="gameTitle">
+      <div class="game-header">
+        <button id="backHome" class="ghost" type="button">← All games</button>
+        <div class="game-header-center">
+          <p id="gameSkill" class="eyebrow"></p>
+          <h1 id="gameTitle">Game</h1>
+        </div>
+        <div class="hud">
+          <div><span class="hud-label">Score</span><strong id="scoreValue">0</strong></div>
+          <div><span class="hud-label">Round</span><strong id="roundValue">1</strong></div>
+        </div>
+      </div>
+      <div id="progressTrack" class="progress-track"><div id="progressFill"></div></div>
+      <section id="gameStage" class="stage" aria-live="polite"></section>
+    </section>
+
+    <section id="resultsView" class="view" aria-labelledby="resultsTitle">
+      <div class="results-top">
+        <div>
+          <p class="eyebrow">Practice profile</p>
+          <h1 id="resultsTitle">Your assessment snapshot</h1>
+          <p>Based only on the games you have completed on this device.</p>
+        </div>
+        <button id="resultsHome" class="secondary" type="button">Back to games</button>
+      </div>
+      <div id="overallCard" class="overall-card"></div>
+      <div id="skillResults" class="skill-results"></div>
+      <div class="section-head compact"><div><p class="eyebrow">Game history</p><h2>Best scores</h2></div></div>
+      <div id="historyGrid" class="history-grid"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+(() => {
+  'use strict';
+
+  const STORAGE_KEY = 'interviewgamer-progress-v1';
+  const $ = (id) => document.getElementById(id);
+  const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+  const shuffle = (arr) => {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+  const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const SKILLS = ['Working Memory','Logical Reasoning','Numerical Reasoning','Attention','Planning','Adaptability','Decision Making'];
+
+  const GAMES = [
+    { id:'memory', title:'Memory Matrix', icon:'◫', skill:'Working Memory', tags:['Memory','Focus'], desc:'Remember flashing locations while the grid gets larger.', rounds:7 },
+    { id:'route', title:'Route Runner', icon:'↗', skill:'Planning', tags:['Planning','Spatial'], desc:'Reach the goal using the shortest path through changing obstacles.', rounds:5 },
+    { id:'number', title:'Number Forge', icon:'∑', skill:'Numerical Reasoning', tags:['Math','Speed'], desc:'Spot the expression that reaches the target before time runs out.', rounds:8 },
+    { id:'rule', title:'Rule Detective', icon:'◇', skill:'Logical Reasoning', tags:['Patterns','Induction'], desc:'Infer a hidden visual rule and choose the pattern that follows it.', rounds:8 },
+    { id:'constraint', title:'Constraint Grid', icon:'▦', skill:'Logical Reasoning', tags:['Deduction','Logic'], desc:'Complete compact symbol grids under row and column constraints.', rounds:6 },
+    { id:'signal', title:'Signal Scanner', icon:'⌁', skill:'Attention', tags:['Attention','Speed'], desc:'Find all target signals hidden among near-matches.', rounds:7 },
+    { id:'switch', title:'Rule Shift', icon:'⇄', skill:'Adaptability', tags:['Flexibility','Learning'], desc:'Classify objects correctly while the sorting rule changes mid-game.', rounds:12 },
+    { id:'priority', title:'Priority Control', icon:'≡', skill:'Decision Making', tags:['Judgement','Prioritization'], desc:'Rank realistic work tasks as deadlines, impact and dependencies compete.', rounds:4 },
+    { id:'recovery', title:'System Recovery', icon:'⚙', skill:'Planning', tags:['Root Cause','Systems'], desc:'Restore a failing system by repairing components in the right order.', rounds:5 },
+    { id:'code', title:'Code Trace', icon:'</>', skill:'Logical Reasoning', tags:['Technical','Tracing'], desc:'Read short pseudocode snippets and predict the exact output.', rounds:8 },
+  ];
+
+  const views = { home:$('homeView'), game:$('gameView'), results:$('resultsView') };
+  const stage = $('gameStage');
+  let progress = loadProgress();
+  let active = null;
+  let currentRound = 0;
+  let rawScore = 0;
+  let correctCount = 0;
+  let mistakes = 0;
+  let startedAt = 0;
+  let interactionLocked = false;
+
+  function loadProgress(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { best:{}, attempts:{} }; }
+    catch { return { best:{}, attempts:{} }; }
+  }
+  function saveProgress(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+  function setView(name){
+    Object.values(views).forEach(v => v.classList.remove('active'));
+    views[name].classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function toast(msg){
+    const el = $('toast'); el.textContent = msg; el.classList.add('show');
+    clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('show'), 1800);
+  }
+  function escapeHtml(s){ return String(s).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+
+  function renderHome(){
+    setView('home');
+    $('gameGrid').innerHTML = GAMES.map(g => {
+      const best = progress.best[g.id];
+      return `<button class="game-card" data-game="${g.id}" type="button">
+        <span class="game-icon" aria-hidden="true">${g.icon}</span>
+        <span><h3>${g.title}</h3><p>${g.desc}</p><span class="game-meta">${g.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</span></span>
+        <span class="best">${best != null ? `Best ${best}` : 'New'}</span>
+      </button>`;
+    }).join('');
+    document.querySelectorAll('[data-game]').forEach(btn => btn.addEventListener('click', () => startGame(btn.dataset.game)));
+    renderProfilePreview();
+  }
+
+  function renderProfilePreview(){
+    const played = Object.keys(progress.best).length;
+    $('gamesPlayedMetric').textContent = played;
+    const skillScores = aggregateSkills();
+    const topSkills = ['Logical Reasoning','Working Memory','Planning','Attention'];
+    $('profileBars').innerHTML = topSkills.map(skill => {
+      const v = skillScores[skill] ?? 0;
+      return `<div class="profile-row"><span>${skill.replace(' Reasoning','')}</span><div class="mini-bar"><i style="width:${v}%"></i></div><b>${v || '—'}</b></div>`;
+    }).join('');
+  }
+
+  function aggregateSkills(){
+    const buckets = {};
+    GAMES.forEach(g => {
+      const v = progress.best[g.id];
+      if (v == null) return;
+      (buckets[g.skill] ||= []).push(v);
+    });
+    const out = {};
+    Object.entries(buckets).forEach(([k,vals]) => out[k] = Math.round(vals.reduce((a,b)=>a+b,0)/vals.length));
+    return out;
+  }
+
+  function startGame(id){
+    active = GAMES.find(g => g.id === id);
+    if (!active) return;
+    currentRound = 0; rawScore = 0; correctCount = 0; mistakes = 0; startedAt = Date.now(); interactionLocked = false;
+    $('gameSkill').textContent = active.skill;
+    $('gameTitle').textContent = active.title;
+    $('scoreValue').textContent = '0';
+    $('roundValue').textContent = '1';
+    $('progressFill').style.width = '0%';
+    setView('game');
+    renderInstructions();
+  }
+
+  function renderInstructions(){
+    const copy = {
+      memory:['Watch the highlighted cells carefully.','After the flash, reproduce the locations in any order.','Later rounds use larger grids and more targets.'],
+      route:['Move the player to the green goal.','Walls cannot be crossed.','Fewer moves earn a higher planning score.'],
+      number:['A target number appears above four expressions.','Choose the expression that equals the target.','Accuracy matters more than guessing quickly.'],
+      rule:['Study the examples that obey a hidden rule.','Choose the option that follows the same relationship.','Rules combine order, repetition, position and transformation.'],
+      constraint:['Each row and column must contain each symbol exactly once.','Choose the missing symbol.','Later rounds expand the grid.'],
+      signal:['A target symbol is shown first.','Tap every exact match in the signal field.','Near-matches are designed to distract you.'],
+      switch:['Sort each object into Group A or Group B.','Use feedback to infer the current rule.','The hidden rule changes partway through.'],
+      priority:['Reorder the work items from highest to lowest priority.','Consider impact, urgency and dependencies.','Submit when you are satisfied with the ranking.'],
+      recovery:['Several system components have failed.','Repair the root cause before dependent components.','You have limited repair actions.'],
+      code:['Trace the pseudocode exactly.','Enter the final output as a number or short string.','Loops and variable changes get harder each round.']
+    }[active.id];
+    stage.innerHTML = `<div class="instruction-card">
+      <div class="instruction-icon" aria-hidden="true">${active.icon}</div>
+      <p class="eyebrow">${active.skill}</p><h2>${active.title}</h2><p class="stage-copy">${active.desc}</p>
+      <div class="instruction-list">${copy.map((x,i)=>`<div><b>${i+1}.</b><span>${x}</span></div>`).join('')}</div>
+      <button id="beginGame" class="primary" type="button">Begin game</button>
+    </div>`;
+    $('beginGame').addEventListener('click', nextRound);
+  }
+
+  function updateHUD(){
+    $('scoreValue').textContent = Math.max(0, Math.round(rawScore));
+    $('roundValue').textContent = `${Math.min(currentRound,active.rounds)} / ${active.rounds}`;
+    $('progressFill').style.width = `${Math.round((currentRound/active.rounds)*100)}%`;
+  }
+
+  function award(points, isCorrect=true){
+    rawScore += points;
+    if (isCorrect) correctCount++; else mistakes++;
+    updateHUD();
+  }
+
+  async function feedback(msg, good=true, delay=650){
+    let el = stage.querySelector('.feedback');
+    if (!el){ el = document.createElement('div'); el.className='feedback'; stage.appendChild(el); }
+    el.className = `feedback ${good?'good':'bad'}`; el.textContent = msg;
+    await wait(delay);
+  }
+
+  function nextRound(){
+    interactionLocked = false;
+    if (currentRound >= active.rounds) return finishGame();
+    currentRound++;
+    updateHUD();
+    const fn = {
+      memory: memoryRound, route: routeRound, number: numberRound, rule: ruleRound,
+      constraint: constraintRound, signal: signalRound, switch: switchRound,
+      priority: priorityRound, recovery: recoveryRound, code: codeRound
+    }[active.id];
+    fn();
+  }
+
+  function finishGame(){
+    if (routeRound.cleanup) routeRound.cleanup();
+    const elapsed = Math.max(1, Math.round((Date.now()-startedAt)/1000));
+    const normalized = normalizeScore(active.id, rawScore);
+    const prev = progress.best[active.id];
+    progress.best[active.id] = prev == null ? normalized : Math.max(prev, normalized);
+    progress.attempts[active.id] = (progress.attempts[active.id] || 0) + 1;
+    saveProgress();
+    $('progressFill').style.width = '100%';
+    const accuracy = Math.round((correctCount / Math.max(1, correctCount + mistakes)) * 100);
+    const newBest = prev == null || normalized > prev;
+    stage.innerHTML = `<div class="end-card">
+      <p class="eyebrow">${newBest ? 'New personal best' : 'Practice complete'}</p>
+      <div class="score-ring" style="--score-angle:${normalized*3.6}deg"><strong>${normalized}</strong><small>/ 100</small></div>
+      <h2>${active.title} complete</h2>
+      <p class="stage-copy">This score combines accuracy and task efficiency for practice feedback.</p>
+      <div class="end-stats"><div><strong>${accuracy}%</strong><span>accuracy</span></div><div><strong>${elapsed}s</strong><span>time</span></div><div><strong>${progress.attempts[active.id]}</strong><span>attempts</span></div></div>
+      <div class="hero-actions" style="justify-content:center"><button id="retryGame" class="primary" type="button">Try again</button><button id="endHome" class="secondary" type="button">Choose another game</button><button id="endResults" class="ghost" type="button">View profile</button></div>
+    </div>`;
+    $('retryGame').addEventListener('click', () => startGame(active.id));
+    $('endHome').addEventListener('click', renderHome);
+    $('endResults').addEventListener('click', renderResults);
+  }
+
+  function normalizeScore(id, score){
+    const max = {memory:700,route:500,number:800,rule:800,constraint:600,signal:700,switch:1200,priority:400,recovery:500,code:800}[id] || 500;
+    return clamp(Math.round((Math.max(0,score)/max)*100),0,100);
+  }
+
+  // 1) MEMORY MATRIX
+  async function memoryRound(){
+    const size = currentRound <= 2 ? 4 : currentRound <= 4 ? 5 : currentRound <= 6 ? 6 : 7;
+    const count = Math.min(3 + Math.floor((currentRound-1)/2), 6);
+    const total = size*size;
+    const targets = shuffle([...Array(total).keys()]).slice(0,count);
+    stage.innerHTML = `<p class="eyebrow">Round ${currentRound}</p><h2>Remember the highlighted cells</h2><p class="stage-copy">Keep the locations in mind. They disappear quickly.</p><div id="memoryGrid" class="grid-board" style="grid-template-columns:repeat(${size},1fr)">${[...Array(total)].map((_,i)=>`<button class="grid-cell" data-i="${i}" aria-label="Cell ${i+1}" type="button"></button>`).join('')}</div><div class="feedback"></div>`;
+    const cells = [...stage.querySelectorAll('.grid-cell')];
+    cells.forEach(c => c.disabled = true);
+    await wait(500);
+    targets.forEach(i => cells[i].classList.add('active'));
+    await wait(Math.max(430,980-currentRound*75));
+    targets.forEach(i => cells[i].classList.remove('active'));
+    stage.querySelector('h2').textContent = `Select ${count} remembered cells`;
+    cells.forEach(c => c.disabled = false);
+    const selected = new Set();
+    cells.forEach(cell => cell.addEventListener('click', async () => {
+      if (interactionLocked) return;
+      const i = Number(cell.dataset.i);
+      if (selected.has(i)){ selected.delete(i); cell.classList.remove('selected'); }
+      else { selected.add(i); cell.classList.add('selected'); }
+      if (selected.size === count){
+        interactionLocked = true;
+        let hits = 0;
+        cells.forEach((c,idx) => {
+          if (targets.includes(idx) && selected.has(idx)){ c.classList.add('correct'); hits++; }
+          else if (selected.has(idx)){ c.classList.add('wrong'); }
+        });
+        const ratio = hits/count;
+        award(Math.round(100*ratio), ratio === 1);
+        if (ratio !== 1 && ratio > 0) correctCount += ratio;
+        await feedback(ratio===1?'Perfect recall.':`${hits}/${count} locations correct.`,ratio===1,800);
+        nextRound();
+      }
+    }));
+  }
+
+  // 2) ROUTE RUNNER
+  const ROUTES = [
+    ['S..#...','##.#.#.','...#...','.#...#.','...##..','.#.....','.....#G'],
+    ['S#.....','.#.###.','...#...','##...#.','...##..','.#.....','....#.G'],
+    ['S...#..','.##.#..','....#..','.#.##..','.#.....','...#.#.','.....#G'],
+    ['S.#....','..#.##.','.#...#.','...#...','##.#.#.','...#...','.#....G'],
+    ['S..##..','.#....#','...##..','##...#.','...#...','.#.##..','......G']
+  ];  function parseRoute(lines){
+    let start,goal,walls=new Set(); const h=lines.length,w=lines[0].length;
+    lines.forEach((row,r)=>[...row].forEach((ch,c)=>{ const k=`${r},${c}`; if(ch==='S')start=[r,c]; if(ch==='G')goal=[r,c]; if(ch==='#')walls.add(k); }));
+    return {h,w,start,goal,walls};
+  }
+  function shortestPath(board){
+    const q=[[...board.start,0]], seen=new Set([board.start.join(',')]);
+    while(q.length){ const [r,c,d]=q.shift(); if(r===board.goal[0]&&c===board.goal[1])return d; for(const [dr,dc] of [[1,0],[-1,0],[0,1],[0,-1]]){const nr=r+dr,nc=c+dc,k=`${nr},${nc}`; if(nr>=0&&nc>=0&&nr<board.h&&nc<board.w&&!board.walls.has(k)&&!seen.has(k)){seen.add(k);q.push([nr,nc,d+1]);}} }
+    return 99;
+  }
+  function routeRound(){
+    if (routeRound.cleanup) routeRound.cleanup();
+    const board=parseRoute(ROUTES[(currentRound-1)%ROUTES.length]); let pos=[...board.start],moves=0; const optimal=shortestPath(board);
+    stage.innerHTML=`<p class="eyebrow">Planning challenge</p><h2>Reach the goal efficiently</h2><p class="stage-copy">Find an efficient route. The shortest path is hidden. Use arrows or WASD.</p><div id="routeBoard" class="route-board" style="grid-template-columns:repeat(${board.w},1fr)"></div><div class="controls"><button class="secondary move" data-d="up" type="button">↑</button><button class="secondary move" data-d="left" type="button">←</button><button class="secondary move" data-d="down" type="button">↓</button><button class="secondary move" data-d="right" type="button">→</button></div><p id="routeMeta" class="micro">Moves: 0</p><div class="feedback"></div>`;
+    const render=()=>{
+      $('routeBoard').innerHTML=[...Array(board.h*board.w)].map((_,i)=>{const r=Math.floor(i/board.w),c=i%board.w,k=`${r},${c}`;let cls='route-cell',ch='';if(board.walls.has(k))cls+=' wall';if(r===board.goal[0]&&c===board.goal[1]){cls+=' goal';ch='◎';}if(r===pos[0]&&c===pos[1]){cls+=' player';ch='●';}return`<div class="${cls}">${ch}</div>`}).join(''); $('routeMeta').textContent=`Moves: ${moves}`;
+    };
+    const move=async(dir)=>{if(interactionLocked)return;const delta={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]}[dir];const nr=pos[0]+delta[0],nc=pos[1]+delta[1],k=`${nr},${nc}`;if(nr<0||nc<0||nr>=board.h||nc>=board.w||board.walls.has(k)){toast('Blocked');return;}pos=[nr,nc];moves++;render();if(nr===board.goal[0]&&nc===board.goal[1]){interactionLocked=true;const efficiency=optimal/moves;award(Math.round(100*efficiency),efficiency>=.9);await feedback(efficiency===1?'Optimal route!':`Solved in ${moves} moves.`,efficiency>=.85,850);nextRound();}};
+    stage.querySelectorAll('.move').forEach(b=>b.addEventListener('click',()=>move(b.dataset.d)));
+    const key=(e)=>{if(!views.game.classList.contains('active')||active.id!=='route')return;const m={ArrowUp:'up',w:'up',W:'up',ArrowDown:'down',s:'down',S:'down',ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right'}[e.key];if(m){e.preventDefault();move(m);}};
+    document.addEventListener('keydown',key,{once:false}); routeRound.cleanup=()=>document.removeEventListener('keydown',key); render();
+  }
+
+  // 3) NUMBER FORGE
+  const NUMBERS=[
+    {t:37,ok:'6 × 7 − 5',opts:['6 × 7 − 5','8 × 5 − 1','54 ÷ 2 + 9','45 − 3 × 2']},
+    {t:28,ok:'(9 − 2) × 4',opts:['(9 − 2) × 4','9 − 2 × 4','6 × 5 − 3','84 ÷ 4 + 8']},
+    {t:46,ok:'8 × 6 − 2',opts:['8 × 6 − 2','7 × 7 − 2','96 ÷ 3 + 13','60 − 8 × 2']},
+    {t:19,ok:'5 × 5 − 6',opts:['5 × 5 − 6','3 × 8 − 4','42 ÷ 2 − 1','7 + 3 × 5']},
+    {t:52,ok:'7 × 8 − 4',opts:['7 × 8 − 4','9 × 6 − 1','120 ÷ 3 + 11','68 − 4 × 3']},
+    {t:33,ok:'(12 − 1) × 3',opts:['(12 − 1) × 3','12 − 1 × 3','8 × 5 − 6','72 ÷ 2 − 2']},
+    {t:41,ok:'6 × 8 − 7',opts:['6 × 8 − 7','5 × 9 − 3','81 ÷ 3 + 15','64 − 6 × 4']},
+    {t:26,ok:'(15 + 11) ÷ 1',opts:['(15 + 11) ÷ 1','7 × 4 − 3','96 ÷ 4 + 1','5 × 6 − 5']}
+  ];  function numberRound(){
+    const q=NUMBERS[currentRound-1]; const opts=shuffle(q.opts);
+    stage.innerHTML=`<p class="eyebrow">Numerical reasoning</p><h2>Which expression makes the target?</h2><div class="target-number">${q.t}</div><div class="choice-grid">${opts.map(o=>`<button class="choice" data-v="${escapeHtml(o)}" type="button">${escapeHtml(o)}</button>`).join('')}</div><div class="feedback"></div>`;
+    stage.querySelectorAll('.choice').forEach(btn=>btn.addEventListener('click',async()=>{if(interactionLocked)return;interactionLocked=true;const ok=btn.dataset.v===q.ok;btn.classList.add(ok?'correct':'wrong');award(ok?100:0,ok);await feedback(ok?'Correct.':'Not quite — check operator precedence.',ok,650);nextRound();}));
+  }
+
+  // 4) RULE DETECTIVE
+  const RULES=[
+    {examples:['▲ ■ ● ◆','■ ● ◆ ▲','● ◆ ▲ ■'], prompt:'Which preserves the same cyclic shift?', ok:'◆ ▲ ■ ●', choices:['◆ ▲ ■ ●','◆ ■ ▲ ●','▲ ◆ ● ■','■ ◆ ● ▲']},
+    {examples:['○ ● ● ○','□ ■ ■ □','△ ▲ ▲ △'], prompt:'Which follows the same mirror-fill pattern?',ok:'◇ ◆ ◆ ◇',choices:['◇ ◆ ◆ ◇','◆ ◇ ◇ ◆','◇ ◆ ◇ ◆','◆ ◆ ◇ ◇']},
+    {examples:['▲ ■ ▲ ■ ●','● ◆ ● ◆ ■','■ ○ ■ ○ ▲'],prompt:'Which follows the same alternating-pair then terminal-symbol rule?',ok:'◆ □ ◆ □ ●',choices:['◆ □ ◆ □ ●','◆ ◆ □ □ ●','□ ◆ □ ◆ ●','◆ □ ● □ ◆']},
+    {examples:['↑ → ↓ ←','→ ↓ ← ↑','↓ ← ↑ →'],prompt:'Which sequence continues 90° clockwise rotations?',ok:'← ↑ → ↓',choices:['← ↑ → ↓','← ↓ → ↑','↑ ← ↓ →','→ ↑ ← ↓']},
+    {examples:['2 6 18','3 9 27','4 12 36'],prompt:'Which uses the same ×3, then ×3 transformation?',ok:'5 15 45',choices:['5 15 45','5 10 30','6 18 48','5 20 60']},
+    {examples:['A D H','C F J','F I M'],prompt:'Letters advance +3 then +4. Which matches?',ok:'H K O',choices:['H K O','H L O','G J N','H J M']},
+    {examples:['1 4 10','2 6 13','3 8 16'],prompt:'Second value adds an increasing odd number; third adds the next even number. Which matches?',ok:'4 10 19',choices:['4 10 19','4 9 18','5 11 20','4 12 20']},
+    {examples:['▲ ● ■ ● ▲','■ ◆ ○ ◆ ■','● ▲ □ ▲ ●'],prompt:'Which preserves the A-B-C-B-A symmetry?',ok:'◆ ■ ○ ■ ◆',choices:['◆ ■ ○ ■ ◆','◆ ○ ■ ○ ◆','■ ◆ ○ ■ ◆','◆ ■ ■ ○ ◆']}
+  ];  function ruleRound(){
+    const q=RULES[currentRound-1];
+    stage.innerHTML=`<p class="eyebrow">Inductive reasoning</p><h2>Infer the hidden rule</h2><p class="stage-copy">${q.prompt}</p><div class="instruction-list">${q.examples.map(x=>`<div class="pattern">${x}</div>`).join('')}</div><div class="choice-grid">${shuffle(q.choices).map(x=>`<button class="choice pattern" data-v="${escapeHtml(x)}" type="button">${x}</button>`).join('')}</div><div class="feedback"></div>`;
+    stage.querySelectorAll('.choice').forEach(btn=>btn.addEventListener('click',async()=>{if(interactionLocked)return;interactionLocked=true;const ok=btn.dataset.v===q.ok;btn.classList.add(ok?'correct':'wrong');award(ok?100:0,ok);await feedback(ok?'Rule identified.':'That option breaks the rule.',ok,650);nextRound();}));
+  }
+
+  // 5) CONSTRAINT GRID
+  function latinGrid(n){
+    const base=[...Array(n)].map((_,r)=>[...Array(n)].map((_,c)=>(r+c)%n));
+    const rows=shuffle([...Array(n).keys()]); const cols=shuffle([...Array(n).keys()]);
+    const remap=shuffle([...Array(n).keys()]);
+    return rows.map(r=>cols.map(c=>remap[base[r][c]]));
+  }
+  function constraintRound(){
+    const n=currentRound<=2?4:5; const symbols=n===4?['●','▲','■','◆']:['●','▲','■','◆','✦']; const grid=latinGrid(n); const br=Math.floor(Math.random()*n),bc=Math.floor(Math.random()*n),answer=grid[br][bc];
+    stage.innerHTML=`<p class="eyebrow">Deductive reasoning</p><h2>Complete the grid</h2><p class="stage-copy">Every row and column must contain each symbol exactly once.</p><table class="logic-table" aria-label="Constraint puzzle">${grid.map((row,r)=>`<tr>${row.map((v,c)=>r===br&&c===bc?'<td class="blank">?</td>':`<td>${symbols[v]}</td>`).join('')}</tr>`).join('')}</table><div class="controls">${symbols.map((s,i)=>`<button class="secondary symbol-choice" data-i="${i}" type="button">${s}</button>`).join('')}</div><div class="feedback"></div>`;
+    stage.querySelectorAll('.symbol-choice').forEach(btn=>btn.addEventListener('click',async()=>{if(interactionLocked)return;interactionLocked=true;const ok=Number(btn.dataset.i)===answer;award(ok?100:0,ok);await feedback(ok?'Constraint satisfied.':'That would duplicate a symbol.',ok,650);nextRound();}));
+  }
+
+  // 6) SIGNAL SCANNER
+  const SIGNAL_POOL=['◉','◎','⊙','◍','◌','⊚','⊛','⊗','⊕','⊖'];
+  function signalRound(){
+    const target=SIGNAL_POOL[(currentRound+1)%SIGNAL_POOL.length]; const total=30 + currentRound*4; const targetCount=4 + currentRound; const positions=new Set(shuffle([...Array(total).keys()]).slice(0,targetCount));
+    const vals=[...Array(total)].map((_,i)=>positions.has(i)?target:sample(SIGNAL_POOL.filter(x=>x!==target)));
+    const selected=new Set();
+    stage.innerHTML=`<p class="eyebrow">Selective attention</p><h2>Find every <span style="color:var(--accent)">${target}</span></h2><p class="stage-copy">There are ${targetCount} exact matches. Tap only the exact target.</p><div class="signal-arena">${vals.map((v,i)=>`<button class="signal" data-i="${i}" data-target="${positions.has(i)?1:0}" type="button">${v}</button>`).join('')}</div><button id="signalSubmit" class="primary" type="button">Submit (${selected.size}/${targetCount})</button><div class="feedback"></div>`;
+    stage.querySelectorAll('.signal').forEach(btn=>btn.addEventListener('click',()=>{const i=Number(btn.dataset.i);if(selected.has(i)){selected.delete(i);btn.classList.remove('target');}else{selected.add(i);btn.classList.add('target');}$('signalSubmit').textContent=`Submit (${selected.size}/${targetCount})`;}));
+    $('signalSubmit').addEventListener('click',async()=>{if(interactionLocked)return;interactionLocked=true;let hits=0,falsePos=0;selected.forEach(i=>positions.has(i)?hits++:falsePos++);const score=Math.max(0,Math.round(100*(hits/targetCount)-falsePos*24));const perfect=hits===targetCount&&falsePos===0;award(score,perfect);await feedback(perfect?'Perfect scan.':`${hits}/${targetCount} targets, ${falsePos} false taps.`,perfect,800);nextRound();});
+  }
+
+  // 7) RULE SHIFT
+  const switchObjects=[
+    {shape:'●',size:'large',fill:'solid',color:'dark'},{shape:'○',size:'small',fill:'outline',color:'light'},
+    {shape:'■',size:'large',fill:'solid',color:'dark'},{shape:'□',size:'small',fill:'outline',color:'light'},
+    {shape:'▲',size:'large',fill:'solid',color:'dark'},{shape:'△',size:'small',fill:'outline',color:'light'},
+    {shape:'◆',size:'large',fill:'solid',color:'dark'},{shape:'◇',size:'small',fill:'outline',color:'light'},
+    {shape:'●',size:'small',fill:'solid',color:'dark'},{shape:'□',size:'large',fill:'outline',color:'light'},
+    {shape:'▲',size:'small',fill:'solid',color:'dark'},{shape:'◇',size:'large',fill:'outline',color:'light'}
+  ];
+  const SWITCH_RULES=[
+    o=>o.fill==='solid',
+    o=>o.shape==='●'||o.shape==='○'||o.shape==='◆'||o.shape==='◇',
+    o=>o.size==='large',
+    o=>o.fill==='solid'&&o.size==='small',
+    o=>(o.shape==='▲'||o.shape==='△'||o.shape==='■'||o.shape==='□')&&o.size==='large'
+  ];
+  function switchRound(){
+    const ruleIdx=currentRound<=2?0:currentRound<=4?1:currentRound<=6?2:currentRound<=9?3:4; const obj=sample(switchObjects); const belongsA=SWITCH_RULES[ruleIdx](obj);
+    stage.innerHTML=`<p class="eyebrow">Adaptive reasoning</p><h2>Sort the object</h2><p class="stage-copy">Infer the current hidden rule from feedback. The rule may change without warning.</p><div class="sort-prompt"><div class="sort-object">${obj.shape}</div><div class="sort-buttons"><button class="secondary sort" data-a="1" type="button">Group A</button><button class="secondary sort" data-a="0" type="button">Group B</button></div></div><div class="feedback"></div>`;
+    stage.querySelectorAll('.sort').forEach(btn=>btn.addEventListener('click',async()=>{if(interactionLocked)return;interactionLocked=true;const ok=(btn.dataset.a==='1')===belongsA;award(ok?100:0,ok);const changed=[3,5,7,10].includes(currentRound);await feedback(ok?(changed?'Correct — note that the rule has shifted.':'Correct classification.'):'Incorrect. Use the feedback to update your rule.',ok,700);nextRound();}));
+  }
+
+  // 8) PRIORITY CONTROL
+  const PRIORITY_CASES=[
+    [
+      {id:'outage',name:'Production outage affecting all users',meta:'Impact: Critical · Deadline: now',rank:1},
+      {id:'security',name:'Security alert on privileged account',meta:'Impact: Critical · Deadline: 20 min',rank:2},
+      {id:'client',name:'Client data discrepancy',meta:'Impact: High · Deadline: 45 min',rank:3},
+      {id:'review',name:'Review release blocker',meta:'Impact: High · Deadline: 2 hr',rank:4},
+      {id:'docs',name:'Update onboarding documentation',meta:'Impact: Low · Deadline: Friday',rank:5}
+    ],
+    [
+      {id:'blocker',name:'Unblock teammate blocking two deliverables',meta:'Impact: High · Deadline: 20 min · Dependency',rank:1},
+      {id:'bug',name:'Investigate paying-customer bug',meta:'Impact: High · Deadline: 1 hr',rank:2},
+      {id:'deploy',name:'Approve production hotfix',meta:'Impact: High · Deadline: 90 min',rank:3},
+      {id:'deck',name:'Prepare tomorrow’s executive demo',meta:'Impact: Medium · Deadline: today',rank:4},
+      {id:'cleanup',name:'Refactor legacy helper',meta:'Impact: Low · No deadline',rank:5}
+    ],
+    [
+      {id:'breach',name:'Potential data exposure alert',meta:'Impact: Critical · Urgent',rank:1},
+      {id:'reg',name:'Submit regulatory response',meta:'Impact: Critical · Deadline: 45 min',rank:2},
+      {id:'dependency',name:'Fix failed job blocking payroll export',meta:'Impact: High · Dependency · 1 hr',rank:3},
+      {id:'exec',name:'Answer executive status request',meta:'Impact: Medium · Deadline: 90 min',rank:4},
+      {id:'meeting',name:'Plan next week’s team meeting',meta:'Impact: Low · Deadline: tomorrow',rank:5}
+    ],
+    [
+      {id:'payments',name:'Payment failures rising rapidly',meta:'Impact: Critical · Active incident',rank:1},
+      {id:'rollback',name:'Decide whether to roll back latest release',meta:'Impact: High · Blocks incident response',rank:2},
+      {id:'vip',name:'Strategic client escalation',meta:'Impact: High · Deadline: 30 min',rank:3},
+      {id:'interview',name:'Candidate interview starting soon',meta:'Impact: Medium · Deadline: 50 min',rank:4},
+      {id:'roadmap',name:'Comment on next-quarter roadmap',meta:'Impact: Medium · Deadline: tomorrow',rank:5}
+    ]
+  ];  function priorityRound(){
+    let items=shuffle(PRIORITY_CASES[currentRound-1].map(x=>({...x})));
+    const render=()=>{
+      $('priorityList').innerHTML=items.map((it,i)=>`<div class="priority-item"><span class="priority-rank">${i+1}</span><div class="priority-info"><b>${it.name}</b><span>${it.meta}</span></div><div class="controls"><button class="ghost pri-up" data-i="${i}" type="button" ${i===0?'disabled':''}>↑</button><button class="ghost pri-down" data-i="${i}" type="button" ${i===items.length-1?'disabled':''}>↓</button></div></div>`).join('');
+      stage.querySelectorAll('.pri-up').forEach(b=>b.addEventListener('click',()=>move(Number(b.dataset.i),-1)));
+      stage.querySelectorAll('.pri-down').forEach(b=>b.addEventListener('click',()=>move(Number(b.dataset.i),1)));
+    };
+    const move=(i,d)=>{const j=i+d;if(j<0||j>=items.length)return;[items[i],items[j]]=[items[j],items[i]];render();};
+    stage.innerHTML=`<p class="eyebrow">Work simulation</p><h2>Rank by priority</h2><p class="stage-copy">Put the item you would address first at the top.</p><div id="priorityList" class="priority-list"></div><button id="prioritySubmit" class="primary" type="button">Submit ranking</button><div class="feedback"></div>`; render();
+    $('prioritySubmit').addEventListener('click',async()=>{if(interactionLocked)return;interactionLocked=true;const distance=items.reduce((sum,it,i)=>sum+Math.abs((i+1)-it.rank),0);const score=Math.max(0,100-distance*12);const perfect=distance===0;award(score,perfect);await feedback(perfect?'Strong prioritization.':`Reasonable, but some trade-offs could be improved.`,perfect,850);nextRound();});
+  }
+
+  // 9) SYSTEM RECOVERY
+  const RECOVERY_CASES=[
+    {nodes:[['Primary DB','failed'],['API','failed'],['Web','failed'],['Checkout','failed']],order:['Primary DB','API','Web','Checkout']},
+    {nodes:[['Identity Provider','failed'],['Auth','failed'],['Orders','failed'],['Email','failed']],order:['Identity Provider','Auth','Orders','Email']},
+    {nodes:[['Queue','failed'],['Worker','failed'],['Aggregator','failed'],['Reports','failed']],order:['Queue','Worker','Aggregator','Reports']},
+    {nodes:[['Config Store','failed'],['Service Mesh','failed'],['Core Service','failed'],['Mobile API','failed']],order:['Config Store','Service Mesh','Core Service','Mobile API']},
+    {nodes:[['DNS','failed'],['Gateway','failed'],['API','failed'],['Client App','failed']],order:['DNS','Gateway','API','Client App']}
+  ];  function recoveryRound(){
+    const q=RECOVERY_CASES[currentRound-1]; let repaired=[];
+    stage.innerHTML=`<p class="eyebrow">Systems reasoning</p><h2>Restore services in dependency order</h2><p class="stage-copy">Tap the root cause first, then the service that depends on it.</p><div class="recovery-map">${shuffle(q.nodes).map(([name])=>`<button class="system-node failed" data-name="${name}" type="button">⚠<strong>${name}</strong><span class="micro">Unavailable</span></button>`).join('')}</div><p class="micro">Repairs used: <span id="repairCount">0</span> / ${q.order.length}</p><div class="feedback"></div>`;
+    stage.querySelectorAll('.system-node').forEach(btn=>btn.addEventListener('click',async()=>{if(interactionLocked||btn.classList.contains('restored'))return;const name=btn.dataset.name;repaired.push(name);$('repairCount').textContent=repaired.length;const expected=q.order[repaired.length-1];if(name===expected){btn.classList.remove('failed');btn.classList.add('restored');btn.querySelector('.micro').textContent='Restored';rawScore+=25;correctCount++;updateHUD();if(repaired.length===q.order.length){interactionLocked=true;await feedback('System restored in the correct dependency order.',true,750);nextRound();}}else{mistakes++;rawScore=Math.max(0,rawScore-20);updateHUD();await feedback(`${name} depends on another failed component.`,false,650);repaired.pop();$('repairCount').textContent=repaired.length;}}));
+  }
+
+  // 10) CODE TRACE
+  const CODES=[
+    {code:'x = 4\ny = 3\nx = x * y - 5\nprint(x)',answer:'7'},
+    {code:'total = 1\nfor i in [2, 3, 4]:\n    total = total * i\nprint(total)',answer:'24'},
+    {code:'x = 11\nif x % 2 == 0:\n    x = x / 2\nelse:\n    x = x * 2 + 1\nprint(x)',answer:'23'},
+    {code:'n = 2\nrepeat 3 times:\n    n = n * 2 + 1\nprint(n)',answer:'23'},
+    {code:'a = 3\nb = 7\na = a + b\nb = a - b\na = a - b\nprint(a * b)',answer:'21'},
+    {code:'x = 0\nfor i in [1,2,3,4,5,6]:\n    if i % 2 == 0:\n        x = x + i * 2\n    else:\n        x = x - 1\nprint(x)',answer:'21'},
+    {code:'s = 0\nfor i in [1,2,3]:\n    for j in [1,2]:\n        s = s + i * j\nprint(s)',answer:'18'},
+    {code:'x = 1\nfor i in [2,3,4]:\n    x = x + i\n    if x % 2 == 0:\n        x = x / 2\nprint(x)',answer:'7'}
+  ];  function codeRound(){
+    const q=CODES[currentRound-1];
+    stage.innerHTML=`<p class="eyebrow">Computational reasoning</p><h2>What does this print?</h2><div class="code-card">${escapeHtml(q.code)}</div><form id="codeForm" class="answer-row"><input id="codeAnswer" inputmode="text" autocomplete="off" aria-label="Your output" placeholder="Enter output" required/><button class="primary" type="submit">Submit</button></form><div class="feedback"></div>`;
+    $('codeAnswer').focus();
+    $('codeForm').addEventListener('submit',async(e)=>{e.preventDefault();if(interactionLocked)return;interactionLocked=true;const val=$('codeAnswer').value.trim();const ok=val===q.answer;award(ok?100:0,ok);await feedback(ok?'Correct trace.':`Expected output: ${q.answer}`,ok,750);nextRound();});
+  }
+
+  function renderResults(){
+    setView('results');
+    const skillScores=aggregateSkills(); const vals=Object.values(progress.best); const overall=vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0;
+    $('overallCard').innerHTML=`<div class="overall-score">${overall}<span>/100</span></div><div><h2 style="margin:0">${vals.length ? 'Practice composite' : 'No completed games yet'}</h2><p>${vals.length ? `Based on ${vals.length} game${vals.length===1?'':'s'}. Scores show your best practice attempt on this device.` : 'Complete a game to start building your practice profile.'}</p></div>`;
+    $('skillResults').innerHTML=SKILLS.map(skill=>{const v=skillScores[skill];return `<div class="skill-card"><div class="skill-card-head"><b>${skill}</b><span>${v??'—'}</span></div><div class="skill-bar"><i style="width:${v??0}%"></i></div></div>`}).join('');
+    $('historyGrid').innerHTML=GAMES.map(g=>`<div class="history-item"><div><strong>${g.title}</strong><div class="micro">${progress.attempts[g.id]||0} attempt${(progress.attempts[g.id]||0)===1?'':'s'}</div></div><span>${progress.best[g.id]??'—'}</span></div>`).join('');
+  }
+
+  $('backHome').addEventListener('click',()=>{if(routeRound.cleanup)routeRound.cleanup();renderHome();});
+  $('resultsHome').addEventListener('click',renderHome);
+  $('showResults').addEventListener('click',renderResults);
+  $('startRecommended').addEventListener('click',()=>{const next=GAMES.find(g=>progress.best[g.id]==null)||GAMES[0];startGame(next.id);});
+  $('resetProgress').addEventListener('click',()=>{if(confirm('Reset all local practice scores?')){progress={best:{},attempts:{}};saveProgress();renderHome();toast('Progress reset');}});
+
+  renderHome();
+})();
+
+</script>
+</body>
+</html>
